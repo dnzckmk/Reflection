@@ -1,0 +1,4 @@
+{
+  "Description": "Setting 1",
+  "Amount": "10"
+}
