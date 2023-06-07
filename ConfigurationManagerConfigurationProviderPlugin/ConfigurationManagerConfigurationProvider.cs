@@ -3,8 +3,9 @@
 // </copyright>
 
 using System.Text.Json;
+using Common;
 
-namespace ConsoleApp
+namespace ConfigurationManagerConfigurationProviderPlugin
 {
     /// <summary>
     /// Configuration manager provider.
@@ -28,11 +29,7 @@ namespace ConsoleApp
 
             this.path = path;
 
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(path, "{\"appSettings\":{}}");
-                Console.WriteLine($"File created. Path: {path}");
-            }
+            FileHelper.CreateFileIfNotExist(path, "{\"appSettings\":{}}");
         }
 
         /// <summary>

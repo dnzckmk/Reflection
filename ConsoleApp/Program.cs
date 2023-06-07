@@ -9,6 +9,9 @@ internal class Program
     {
         var component = new ConfigurationComponent();
 
+        // Load the settings
+        component.LoadSettings();
+
         // Set values
         component.Description = "Setting 1";
         component.Count = 5;

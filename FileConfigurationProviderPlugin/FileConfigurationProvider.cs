@@ -3,8 +3,9 @@
 // </copyright>
 
 using System.Text.Json;
+using Common;
 
-namespace ConsoleApp
+namespace FileConfigurationProviderPlugin
 { /// <summary>
   /// File configuration provider.
   /// </summary>
@@ -27,11 +28,7 @@ namespace ConsoleApp
 
             this.path = path;
 
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(path, "{}");
-                Console.WriteLine($"File created. Path: {path}");
-            }
+            FileHelper.CreateFileIfNotExist(path, "{}");
         }
 
         /// <summary>
