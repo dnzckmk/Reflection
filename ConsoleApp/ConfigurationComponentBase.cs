@@ -2,6 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Reflection;
+using Common;
+using ConfigurationManagerConfigurationProviderPlugin;
+using FileConfigurationProviderPlugin;
+
 namespace ConsoleApp
 {
     /// <summary>
@@ -58,15 +63,19 @@ namespace ConsoleApp
         /// <returns>Returns instance of the provider type.</returns>
         private static IConfigurationProvider CreateConfigurationProvider(Type providerType)
         {
+            Assembly providerAssembly = Assembly.LoadFrom(providerType.Assembly.Location);
+            Type providerTypeInAssembly = providerAssembly.GetType(providerType.FullName);
+            ConstructorInfo constructor = providerTypeInAssembly.GetConstructor(new[] { typeof(string) });
+
             if (providerType == typeof(FileConfigurationProvider))
             {
-                var path = GetFilePath("config.txt");
-                return Activator.CreateInstance(providerType, path) as IConfigurationProvider;
+                var path = GetFilePath("ConsoleApp", "config.txt");
+                return (IConfigurationProvider)constructor.Invoke(new object[] { path });
             }
             else if (providerType == typeof(ConfigurationManagerConfigurationProvider))
             {
-                var path = GetFilePath("appsettings.json");
-                return Activator.CreateInstance(providerType, path) as IConfigurationProvider;
+                var path = GetFilePath("ConsoleApp", "appsettings.json");
+                return (IConfigurationProvider)constructor.Invoke(new object[] { path });
             }
 
             // Add other configuration providers here as needed
@@ -78,10 +87,10 @@ namespace ConsoleApp
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns>Returns the full file path.</returns>
-        private static string GetFilePath(string fileName)
+        private static string GetFilePath(string folderName, string fileName)
         {
-            var rootPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            return Path.Combine(rootPath, fileName);
+            var rootPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            return Path.Combine(rootPath, folderName, fileName);
         }
 
         /// <summary>

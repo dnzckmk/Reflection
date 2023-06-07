@@ -2,6 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using ConfigurationManagerConfigurationProviderPlugin;
+using FileConfigurationProviderPlugin;
+
 namespace ConsoleApp
 {
     /// <summary>

@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace ConsoleApp
+namespace Common
 {
     /// <summary>
     /// Interface for the Configuration Providers.
